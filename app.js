@@ -1,3 +1,4 @@
-console.log('test');
-
-let a = 1;
+//⊗ndPmBsIn
+for (let i = 0; i <= 10; i++) {
+    console.log(i)
+}
