@@ -1,10 +1,4 @@
-//⊗ndPmBsMd
-import _ from "lodash";
+import fs from 'fs';
 
-console.log(_.range(4))
-
-console.log(_.random(100))
-
-let id = _.uniqueId('user');
-
-console.log(id)
+let text = fs.readFileSync('readme.txt', 'utf8');
+console.log(text);
