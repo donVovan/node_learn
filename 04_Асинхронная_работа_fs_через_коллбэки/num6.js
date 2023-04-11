@@ -8,7 +8,7 @@ fs.readFile('text1.txt', 'utf8', (err, data1)=>{
                 fs.readFile('text3.txt', 'utf8', (err, data3)=>{
                     if (!err){
                         let sum = String(Number(data1) + Number(data2) + Number(data3));
-                        fs.writeFile('newSum.txt', sum, (err)=>{
+                        fs.writeFile('num1.txt', sum, (err)=>{
                             if (err){
                                 console.log('ошибка записи файла');
                             }
