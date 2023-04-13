@@ -1,12 +1,6 @@
 //⊗ndPmSvRq
 import http from 'http';
 
-let obj = {
-    '/page1': '1',
-    '/page2': '2',
-    '/page3': '3',
-}
-
 http.createServer((request, response) => {
     if (request.url != '/favicon.ico') {
         let text;
@@ -14,13 +8,13 @@ http.createServer((request, response) => {
 
         switch (request.url) {
             case '/page1':
-                text = obj['/page1'];
+                text = '1';
                 break;
             case '/page2':
-                text = obj['/page2'];
+                text = '2';
                 break;
             case '/page3':
-                text = obj['/page3'];
+                text = '3';
                 break;
             default:
                 text = 'page not found';
