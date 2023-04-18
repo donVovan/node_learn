@@ -4,7 +4,7 @@ import fs from 'fs/promises';
 
 let obj = {
     '/page1': 'file1.html',
-    '/page2': 'file2.html',
+    '/page2': 'page.html',
     '/page3': 'file3.html',
 }
 
