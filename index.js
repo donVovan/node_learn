@@ -6,13 +6,13 @@ function getMimeType(path) {
     let mimes = {
         html: 'text/html',
         jpeg: 'image/jpeg',
-        jpg:  'image/jpeg',
-        png:  'image/png',
-        svg:  'image/svg+xml',
+        jpg: 'image/jpeg',
+        png: 'image/png',
+        svg: 'image/svg+xml',
         json: 'application/json',
-        js:   'text/javascript',
-        css:  'text/css',
-        ico:  'image/x-icon',
+        js: 'text/javascript',
+        css: 'text/css',
+        ico: 'image/x-icon',
     };
 
     let exts = Object.keys(mimes);
@@ -31,7 +31,26 @@ http.createServer(async (request, response) => {
     if (request.url != '/favicon.ico') {
         let text;
         let status;
-        let path = 'root' + request.url;
+        let path = request.url;
+
+        if (path === '/') {
+            path = 'root/index';
+        } else {
+            path = path.slice(1);
+
+            if (!path.endsWith('/')) {
+                path += '.html';
+            }
+
+            if (path.includes('/')) {
+                let parts = path.split('/');
+                let file = parts.pop();
+                let dir = parts.join('/');
+                path = `${dir}/${file}.html`;
+            }
+        }
+
+        path = `root/${path}`;
 
         try {
             if ((await fs.promises.stat(path)).isDirectory()) {
@@ -42,7 +61,7 @@ http.createServer(async (request, response) => {
             text = await fs.promises.readFile(path);
         } catch (e) {
             status = 404;
-            path = 'root' + '/404.html';
+            path = 'root/404.html';
             text = await fs.promises.readFile(path, 'utf8');
         }
 
