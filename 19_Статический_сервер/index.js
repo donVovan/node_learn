@@ -10,7 +10,7 @@ http.createServer(async (request, response) => {
 
         try {
             if ((await fs.promises.stat(path)).isDirectory()) {
-                path += '/index.html';
+                path += '/_layout.html';
             }
 
             status = 200;
