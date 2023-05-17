@@ -2,6 +2,30 @@
 import http from 'http';
 import fs from 'fs';
 
+function getMimeType(path) {
+    let mimes = {
+        html: 'text/html',
+        jpeg: 'image/jpeg',
+        jpg: 'image/jpeg',
+        png: 'image/png',
+        svg: 'image/svg+xml',
+        json: 'application/json',
+        js: 'text/javascript',
+        css: 'text/css',
+        ico: 'image/x-icon',
+    };
+
+    let exts = Object.keys(mimes);
+    let extReg = new RegExp('\\.(' + exts.join('|') + ')$');
+
+    let ext = path.match(extReg)[1];
+
+    if (ext) {
+        return mimes[ext];
+    } else {
+        return 'text/plain';
+    }
+}
 
 http.createServer(async (request, response) => {
     if (request.url != '/favicon.ico') {
@@ -18,7 +42,7 @@ http.createServer(async (request, response) => {
 
             let html = layout.replace(/\{% get content %\}/, content);
             html = html.replace(/\{% get title %\}/, title);
-            response.writeHead(200, {'Content-Type': 'text/html'});
+            response.writeHead(200, {'Content-Type': getMimeType(lpath)});
             response.write(html);
             response.end();
         } catch {
@@ -32,7 +56,7 @@ http.createServer(async (request, response) => {
 
             let errorPage = errorLayout.replace(/\{% get title %\}/, errorTitle);
             errorPage = errorPage.replace(/\{% get content %\}/, errorContent);
-            response.writeHead(404, {'Content-Type': 'text/html'});
+            response.writeHead(404, {'Content-Type': getMimeType(errorPath)});
             response.write(errorPage);
             response.end();
         }
