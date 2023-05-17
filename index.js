@@ -35,13 +35,16 @@ http.createServer(async (request, response) => {
             let lpath = 'root/layout.html';
             let cpath = 'page/dir/name' + request.url + 'content.html';
             let tpath = 'page/dir/name' + request.url + 'title.html';
+            let mpath = 'page/dir/meta' + request.url + 'meta.html';
 
             let layout = await fs.promises.readFile(lpath, 'utf8');
             let content = await fs.promises.readFile(cpath, 'utf8');
             let title = await fs.promises.readFile(tpath, 'utf8');
+            let meta = await fs.promises.readFile(mpath, 'utf8');
 
             let html = layout.replace(/\{% get content %\}/, content);
             html = html.replace(/\{% get title %\}/, title);
+            html = html.replace(/\{% get meta %\}/, meta)
             response.writeHead(200, {'Content-Type': getMimeType(lpath)});
             response.write(html);
             response.end();
@@ -49,13 +52,16 @@ http.createServer(async (request, response) => {
             let errorPath = 'root/404.html';
             let errorTitlePath = 'page/404/errorTitle.html';
             let errorContentPath = 'page/404/errorContent.html';
+            let mpath = 'page/dir/meta' + request.url + 'meta.html';
 
             let errorLayout = await fs.promises.readFile(errorPath, 'utf8');
             let errorTitle = await fs.promises.readFile(errorTitlePath, 'utf8');
             let errorContent = await fs.promises.readFile(errorContentPath, 'utf8');
+            let meta = await fs.promises.readFile(mpath, 'utf8');
 
             let errorPage = errorLayout.replace(/\{% get title %\}/, errorTitle);
             errorPage = errorPage.replace(/\{% get content %\}/, errorContent);
+            errorPage = errorPage.replace(/\{% get meta %\}/, meta)
             response.writeHead(404, {'Content-Type': getMimeType(errorPath)});
             response.write(errorPage);
             response.end();
